@@ -1,5 +1,24 @@
 import os
+from google import genai
 
+schema_write_file = genai.types.FunctionDeclaration(
+    name="write_file",
+    description="Write or overwrite a file with provided content.",
+    parameters=genai.types.Schema(
+        type=genai.types.Type.OBJECT,
+        properties={
+            "file_path": genai.types.Schema(
+                type=genai.types.Type.STRING,
+                description="Relative path to the file to be written."
+            ),
+            "content": genai.types.Schema(
+                type=genai.types.Type.STRING,
+                description="What should be written."
+            ),
+        },
+        required = ["file_path", "content"]
+    ),
+)
 def write_file(working_directory, file_path, content):
     
     #creating an absolute path from the working directory and file path variables
